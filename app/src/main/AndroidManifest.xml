@@ -3,23 +3,29 @@
     package="com.questionpro.bullscows.app">
 
     <application>
-        <activity android:name=".MainActivity">
-            <intent-filter android:order="1">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.BROWSABLE" />
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data
-                    android:host="questionpro.com"
-                    android:pathPattern="/.*"
-                    android:scheme="https" />
-            </intent-filter>
+        <activity android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+
+        </activity>
+        <activity android:name=".ChooserScreen"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@android:style/Theme.NoTitleBar">
+
+        </activity>
+        <activity android:name=".GuesserScreen"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@android:style/Theme.NoTitleBar">
+
         </activity>
     </application>
 
