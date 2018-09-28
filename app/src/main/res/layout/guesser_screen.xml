@@ -37,4 +37,6 @@
         android:id="@+id/submitButton"
         android:text="SUBMIT"/>
 
+    <include layout="@layout/attempts_list"/>
+
 </LinearLayout>

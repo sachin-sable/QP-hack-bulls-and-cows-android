@@ -1,10 +1,12 @@
 package com.questionpro.bullscows.app.utils;
 
+import com.questionpro.bullscows.app.PassAttempt;
+
 import java.util.HashMap;
 
 public class Utils {
 
-    public static String getHint(String secret, String guess) {
+    public static PassAttempt getHint(String secret, String guess) {
         int countBull=0;
         int countCow=0;
 
@@ -47,6 +49,9 @@ public class Utils {
             }
         }
 
-        return countBull+"- Bulls && "+countCow+"- Cows";
+        PassAttempt passAttempt = new PassAttempt();
+        passAttempt.bullsCount = countBull;
+        passAttempt.cowsCount = countCow;
+        return passAttempt;
     }
 }

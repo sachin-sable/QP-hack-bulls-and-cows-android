@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.questionpro.bullscows.app.utils.GlobalData;
@@ -25,7 +26,9 @@ public class GuesserScreen extends Activity{
     private String selectedWord;
     private Button submitButton;
     private int currentPass= 0;
+    private ListView attemptsListView;
     private Map<Integer,String> passes = new LinkedHashMap<>();
+    private ResultAdapter resultAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +36,10 @@ public class GuesserScreen extends Activity{
         layoutInflater = LayoutInflater.from(this);
         textLayout = findViewById(R.id.textInputLayout);
         submitButton = findViewById(R.id.submitButton);
+        attemptsListView = findViewById(R.id.attemptListView);
         selectedWord = globalData.getCurrentWord();
+        resultAdapter = new ResultAdapter(this);
+        attemptsListView.setAdapter(resultAdapter);
         for(int i=0; i<selectedWord.length(); i++){
             final int index = i;
             EditText editText =(EditText) layoutInflater.inflate(R.layout.edit_text_box, null);
@@ -80,10 +86,11 @@ public class GuesserScreen extends Activity{
     }
 
     private void submitInput(String text){
-        String result = Utils.getHint(selectedWord.toLowerCase(), text.toLowerCase());
-
-        passes.put(currentPass++,result);
+        PassAttempt result = Utils.getHint(selectedWord.toLowerCase(), text.toLowerCase());
+        result.index = currentPass++;
+        //passes.put(currentPass++,result);
         Log.i("Sachin", "Result- Pass-"+currentPass+" Result-"+result);
+        resultAdapter.addPassAttempt(result);
         clearAllEditTexts();
 
     }
