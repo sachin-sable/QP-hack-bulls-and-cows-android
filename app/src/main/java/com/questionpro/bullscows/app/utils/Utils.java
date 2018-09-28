@@ -1,11 +1,16 @@
 package com.questionpro.bullscows.app.utils;
 
+import android.content.Context;
+import android.provider.Settings;
+
 import com.questionpro.bullscows.app.PassAttempt;
 
 import java.util.HashMap;
 
 public class Utils {
-
+    public static String getDeviceId(Context context){
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
     public static PassAttempt getHint(String secret, String guess) {
         int countBull=0;
         int countCow=0;

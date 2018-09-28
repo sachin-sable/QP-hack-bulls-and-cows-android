@@ -13,8 +13,15 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.questionpro.bullscows.app.utils.GlobalData;
 import com.questionpro.bullscows.app.utils.Utils;
+
+import org.json.JSONObject;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -29,6 +36,10 @@ public class GuesserScreen extends Activity{
     private ListView attemptsListView;
     private Map<Integer,String> passes = new LinkedHashMap<>();
     private ResultAdapter resultAdapter;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
+    final DatabaseReference guesserInput = myRef.child("GuesserInput");
+    final DatabaseReference chooserInputRef = myRef.child("ChooserInput");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,6 +51,38 @@ public class GuesserScreen extends Activity{
         selectedWord = globalData.getCurrentWord();
         resultAdapter = new ResultAdapter(this);
         attemptsListView.setAdapter(resultAdapter);
+        submitButton.setVisibility(View.GONE);
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(validateInput()){
+                    StringBuffer stringBuffer = new StringBuffer();
+                    for(int  i=0 ; i<selectedWord.length(); i++) {
+                        stringBuffer.append(((EditText) findViewById(i)).getText().toString().toLowerCase());
+                    }
+                    submitInput(stringBuffer.toString());
+                }
+            }
+        });
+
+        chooserInputRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                selectedWord = dataSnapshot.getValue(String.class);
+                if(!selectedWord.isEmpty()) {
+                    addInputBoxes(selectedWord);
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    private void addInputBoxes(final String selectedWord) {
+        textLayout.removeAllViews();
         for(int i=0; i<selectedWord.length(); i++){
             final int index = i;
             EditText editText =(EditText) layoutInflater.inflate(R.layout.edit_text_box, null);
@@ -71,23 +114,15 @@ public class GuesserScreen extends Activity{
             editText.setLayoutParams(params);
             textLayout.addView(editText);
         }
-        submitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(validateInput()){
-                    StringBuffer stringBuffer = new StringBuffer();
-                    for(int  i=0 ; i<selectedWord.length(); i++) {
-                        stringBuffer.append(((EditText) findViewById(i)).getText().toString().toLowerCase());
-                    }
-                    submitInput(stringBuffer.toString());
-                }
-            }
-        });
+        submitButton.setVisibility(View.VISIBLE);
     }
 
     private void submitInput(String text){
         PassAttempt result = Utils.getHint(selectedWord.toLowerCase(), text.toLowerCase());
         result.index = currentPass++;
+
+        JSONObject jsonObject = PassAttempt.toJSON(result);
+        guesserInput.setValue(jsonObject.toString());
         //passes.put(currentPass++,result);
         Log.i("Sachin", "Result- Pass-"+currentPass+" Result-"+result);
         resultAdapter.addPassAttempt(result);

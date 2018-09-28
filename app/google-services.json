@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "813952438222",
+    "firebase_url": "https://qpbullsandcowsandroid.firebaseio.com",
+    "project_id": "qpbullsandcowsandroid",
+    "storage_bucket": "qpbullsandcowsandroid.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:813952438222:android:cb3c046e9302a04c",
+        "android_client_info": {
+          "package_name": "com.questionpro.bullscows.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "813952438222-9kj7cdsvlknjohoa6t3eb0e4fpt42jhe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.questionpro.bullscows.app",
+            "certificate_hash": "5188fb8b7340e83dd957e0b44ed946b502c12b61"
+          }
+        },
+        {
+          "client_id": "813952438222-bqlm92018kq6vpa2phnahgeob64d21sm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByoh393U9x2nC_Ur6ebxxzoq5o2M1HJcw"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "813952438222-bqlm92018kq6vpa2phnahgeob64d21sm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -14,6 +14,7 @@ public class GlobalData {
     private String currentWord = "";
     private GlobalData(){
 
+
     }
 
     public static GlobalData getInstance(){
