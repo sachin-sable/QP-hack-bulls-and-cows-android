@@ -1,12 +1,15 @@
 package com.questionpro.bullscows.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -27,6 +30,7 @@ public class ChooserScreen extends Activity {
     final DatabaseReference guesserInput = myRef.child("GuesserInput");
     final DatabaseReference chooserInputRef = myRef.child("ChooserInput");
     private ResultAdapter resultAdapter;
+    private TextView labelText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +38,7 @@ public class ChooserScreen extends Activity {
         enteredText = findViewById(R.id.enteredText);
         submitButton = findViewById(R.id.submitButton);
         attemptsListView = findViewById(R.id.attemptListView);
+        labelText = findViewById(R.id.textView);
         resultAdapter = new ResultAdapter(this);
         attemptsListView.setAdapter(resultAdapter);
         if(resultAdapter.getCount()>0)
@@ -43,12 +48,8 @@ public class ChooserScreen extends Activity {
             @Override
             public void onClick(View v) {
                 if(validateText()){
-                    try{
-                        chooserInputRef.setValue(enteredText.getText().toString());
-                    }catch (Exception e){}
+                    confirmWord();
 
-                    GlobalData.getInstance().setCurrentWord(enteredText.getText().toString());
-                    enteredText.setEnabled(false);
                 }
             }
         });
@@ -77,6 +78,39 @@ public class ChooserScreen extends Activity {
 
 
 
+    }
+
+    public void confirmWord(){
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Confirm?");
+        alertDialogBuilder.setMessage("Do you confirm this \""+enteredText.getText().toString()+"\" word? ");
+        alertDialogBuilder.setPositiveButton("Yes",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        try{
+                            chooserInputRef.setValue(enteredText.getText().toString());
+                        }catch (Exception e){}
+
+                        GlobalData.getInstance().setCurrentWord(enteredText.getText().toString());
+                        enteredText.setEnabled(false);
+                        labelText.setText("Your word is set. Waiting for the other player to guess. Sit back and relax.");
+                        submitButton.setVisibility(View.GONE);
+                        enteredText.setVisibility(View.GONE);
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("No- Want To Change",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        enteredText.requestFocus();
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private boolean validateText(){

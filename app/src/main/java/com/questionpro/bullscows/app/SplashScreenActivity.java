@@ -80,10 +80,12 @@ public class SplashScreenActivity extends Activity{
                         }
 
                         if (jsonObject.optString("DEVICE_ID").equals(Utils.getDeviceId(SplashScreenActivity.this))) {
+                            Log.i("Sachin", "Going to Chooser screen");
                             Intent intent = new Intent(SplashScreenActivity.this, ChooserScreen.class);
                             intent.putExtra("json", value);
                             startActivity(intent);
                         } else {
+                            Log.i("Sachin", "Going to Guesser screen");
                             Intent intent = new Intent(SplashScreenActivity.this, GuesserScreen.class);
                             intent.putExtra("json", value);
                             startActivity(intent);
