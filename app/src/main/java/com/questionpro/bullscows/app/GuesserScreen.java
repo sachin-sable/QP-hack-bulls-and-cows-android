@@ -1,6 +1,8 @@
 package com.questionpro.bullscows.app;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -127,8 +129,36 @@ public class GuesserScreen extends Activity{
         //passes.put(currentPass++,result);
         Log.i("Sachin", "Result- Pass-"+currentPass+" Result-"+result);
         resultAdapter.addPassAttempt(result);
-        clearAllEditTexts();
 
+        if(result.bullsCount == text.length()) {
+            finishGame(currentPass);
+        }else
+            clearAllEditTexts();
+
+    }
+
+    public void finishGame(final int attempts){
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Congratulations!!!");
+        alertDialogBuilder.setMessage("You Guess correct word in "+attempts+" Attempts.");
+                alertDialogBuilder.setPositiveButton("Done",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface arg0, int arg1) {
+                                GuesserScreen.this.finish();
+                            }
+                        });
+
+        /*alertDialogBuilder.setNegativeButton("No",
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });*/
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
     }
 
     private void clearAllEditTexts(){
