@@ -60,9 +60,16 @@ public class ChooserScreen extends Activity {
                 String value = dataSnapshot.getValue(String.class);
                 try {
                     if(!value.isEmpty()) {
+                        labelText.setText("Here is the progress of the other player.");
                         JSONObject jsonObject = new JSONObject(value);
                         PassAttempt passAttempt = PassAttempt.fromJSON(jsonObject);
                         resultAdapter.addPassAttempt(passAttempt);
+                        if(passAttempt.bullsCount == GlobalData.getInstance().getCurrentWord().length()){
+                            Toast.makeText(ChooserScreen.this.getApplicationContext(), "The other person has guessed the word \""
+                                    +GlobalData.getInstance().getCurrentWord()+"\"correctly in "+resultAdapter.getCount()+" attempts.",Toast.LENGTH_LONG).show();
+                            ChooserScreen.this.finish();
+                        }
+
                     }
                 }
                 catch (Exception e){
@@ -94,7 +101,7 @@ public class ChooserScreen extends Activity {
 
                         GlobalData.getInstance().setCurrentWord(enteredText.getText().toString());
                         enteredText.setEnabled(false);
-                        labelText.setText("Your word is set. Waiting for the other player to guess. Sit back and relax.");
+                        labelText.setText("Your word is set. Waiting for the other player to guess.");
                         submitButton.setVisibility(View.GONE);
                         enteredText.setVisibility(View.GONE);
                     }

@@ -33,7 +33,7 @@ public class SplashScreenActivity extends Activity{
 
     final DatabaseReference user = myRef.child("User");
 
-    private String userType="Chooser";
+    private String userType="CHOOSER";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,7 +79,8 @@ public class SplashScreenActivity extends Activity{
                             SharedPrefManager.getInstance(SplashScreenActivity.this).saveGuestDeviceId(jsonObject.optString("DeviceId"));
                         }
 
-                        if (jsonObject.optString("DEVICE_ID").equals(Utils.getDeviceId(SplashScreenActivity.this))) {
+                        if (jsonObject.optString("DEVICE_ID").equals(Utils.getDeviceId(SplashScreenActivity.this))
+                                && jsonObject.optString("ROLE").equals("CHOOSER")) {
                             Log.i("Sachin", "Going to Chooser screen");
                             Intent intent = new Intent(SplashScreenActivity.this, ChooserScreen.class);
                             intent.putExtra("json", value);
