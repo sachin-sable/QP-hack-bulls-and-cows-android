@@ -114,6 +114,7 @@ public class GuesserScreen extends Activity{
             editText.setLayoutParams(params);
             textLayout.addView(editText);
         }
+        ((EditText)textLayout.getChildAt(0)).requestFocus();
         submitButton.setVisibility(View.VISIBLE);
     }
 
@@ -134,6 +135,7 @@ public class GuesserScreen extends Activity{
         for(int  i=0 ; i<selectedWord.length(); i++){
             ((EditText) findViewById(i)).setText("");
         }
+        ((EditText) findViewById(0)).requestFocus();
     }
     private boolean validateInput(){
         for(int  i=0 ; i<selectedWord.length(); i++){

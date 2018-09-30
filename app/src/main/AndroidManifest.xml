@@ -18,12 +18,14 @@
         <activity android:name=".ChooserScreen"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
+            android:launchMode= "singleInstance"
             android:theme="@android:style/Theme.NoTitleBar">
 
         </activity>
         <activity android:name=".GuesserScreen"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize"
+            android:launchMode= "singleInstance"
             android:theme="@android:style/Theme.NoTitleBar">
 
         </activity>
