@@ -36,7 +36,10 @@ public class ChooserScreen extends Activity {
         attemptsListView = findViewById(R.id.attemptListView);
         resultAdapter = new ResultAdapter(this);
         attemptsListView.setAdapter(resultAdapter);
-        submitButton.setOnClickListener(new View.OnClickListener() {
+        if(resultAdapter.getCount()>0)
+            enteredText.setEnabled(false);
+
+            submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(validateText()){
@@ -45,7 +48,7 @@ public class ChooserScreen extends Activity {
                     }catch (Exception e){}
 
                     GlobalData.getInstance().setCurrentWord(enteredText.getText().toString());
-
+                    enteredText.setEnabled(false);
                 }
             }
         });
