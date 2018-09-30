@@ -67,6 +67,9 @@ public class ChooserScreen extends Activity {
                         if(passAttempt.bullsCount == GlobalData.getInstance().getCurrentWord().length()){
                             Toast.makeText(ChooserScreen.this.getApplicationContext(), "The other person has guessed the word \""
                                     +GlobalData.getInstance().getCurrentWord()+"\"correctly in "+resultAdapter.getCount()+" attempts.",Toast.LENGTH_LONG).show();
+                            myRef.child("User").setValue("");
+                            myRef.child("ChooserInput").setValue("");
+                            myRef.child("GuesserInput").setValue("");
                             ChooserScreen.this.finish();
                         }
 
