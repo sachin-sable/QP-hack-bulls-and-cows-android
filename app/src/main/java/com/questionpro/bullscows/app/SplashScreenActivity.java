@@ -73,19 +73,21 @@ public class SplashScreenActivity extends Activity{
                 String value = dataSnapshot.getValue(String.class);
                 try {
                     Log.d("Datta","Chooser feedback:"+value);
-                    JSONObject jsonObject = new JSONObject(value);
-                    if(!jsonObject.optString("DEVICE_ID").equals(Utils.getDeviceId(SplashScreenActivity.this))) {
-                        SharedPrefManager.getInstance(SplashScreenActivity.this).saveGuestDeviceId(jsonObject.optString("DeviceId"));
-                    }
+                    if(!value.isEmpty()) {
+                        JSONObject jsonObject = new JSONObject(value);
+                        if (!jsonObject.optString("DEVICE_ID").equals(Utils.getDeviceId(SplashScreenActivity.this))) {
+                            SharedPrefManager.getInstance(SplashScreenActivity.this).saveGuestDeviceId(jsonObject.optString("DeviceId"));
+                        }
 
-                    if(jsonObject.optString("DEVICE_ID").equals(Utils.getDeviceId(SplashScreenActivity.this))){
-                        Intent intent=new Intent(SplashScreenActivity.this,ChooserScreen.class);
-                        intent.putExtra("json",value);
-                        startActivity(intent);
-                    }else{
-                        Intent intent=new Intent(SplashScreenActivity.this,GuesserScreen.class);
-                        intent.putExtra("json",value);
-                        startActivity(intent);
+                        if (jsonObject.optString("DEVICE_ID").equals(Utils.getDeviceId(SplashScreenActivity.this))) {
+                            Intent intent = new Intent(SplashScreenActivity.this, ChooserScreen.class);
+                            intent.putExtra("json", value);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(SplashScreenActivity.this, GuesserScreen.class);
+                            intent.putExtra("json", value);
+                            startActivity(intent);
+                        }
                     }
                 }catch (Exception e){e.printStackTrace();}
             }

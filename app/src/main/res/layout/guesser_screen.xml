@@ -35,7 +35,8 @@
         android:layout_width="match_parent"
         android:layout_height="42dp"
         android:id="@+id/submitButton"
-        android:text="SUBMIT"/>
+        android:background="@drawable/login_button_selectore"
+        android:text="Submit"/>
 
     <include layout="@layout/attempts_list"/>
 

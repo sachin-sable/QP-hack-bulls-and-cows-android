@@ -55,9 +55,11 @@ public class ChooserScreen extends Activity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String value = dataSnapshot.getValue(String.class);
                 try {
-                    JSONObject jsonObject = new JSONObject(value);
-                    PassAttempt passAttempt = PassAttempt.fromJSON(jsonObject);
-                    resultAdapter.addPassAttempt(passAttempt);
+                    if(!value.isEmpty()) {
+                        JSONObject jsonObject = new JSONObject(value);
+                        PassAttempt passAttempt = PassAttempt.fromJSON(jsonObject);
+                        resultAdapter.addPassAttempt(passAttempt);
+                    }
                 }
                 catch (Exception e){
                     e.printStackTrace();
