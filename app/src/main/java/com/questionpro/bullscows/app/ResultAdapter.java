@@ -25,6 +25,10 @@ public class ResultAdapter extends BaseAdapter {
         return passes.size();
     }
 
+    public void clearData(){
+        passes.clear();
+    }
+
     @Override
     public Object getItem(int position) {
         return passes.get(position);

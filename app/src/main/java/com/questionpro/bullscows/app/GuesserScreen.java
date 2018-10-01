@@ -150,7 +150,7 @@ public class GuesserScreen extends Activity{
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
-
+                                resultAdapter.clearData();
                                 myRef.child("User").setValue("");
                                 myRef.child("ChooserInput").setValue("");
                                 myRef.child("GuesserInput").setValue("");

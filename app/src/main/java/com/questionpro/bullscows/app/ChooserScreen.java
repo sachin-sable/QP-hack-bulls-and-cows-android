@@ -63,15 +63,21 @@ public class ChooserScreen extends Activity {
                         labelText.setText("Here is the progress of the other player.");
                         JSONObject jsonObject = new JSONObject(value);
 
-                        PassAttempt passAttempt = PassAttempt.fromJSON(jsonObject);
-                        resultAdapter.addPassAttempt(passAttempt);
-                        if(passAttempt.bullsCount == GlobalData.getInstance().getCurrentWord().length()){
-                            Toast.makeText(ChooserScreen.this.getApplicationContext(), "The other person has guessed the word \""
-                                    +GlobalData.getInstance().getCurrentWord()+"\"correctly in "+resultAdapter.getCount()+" attempts.",Toast.LENGTH_LONG).show();
-                            myRef.child("User").setValue("");
-                            myRef.child("ChooserInput").setValue("");
-                            myRef.child("GuesserInput").setValue("");
+                        if(jsonObject.has("Exit")){
                             ChooserScreen.this.finish();
+                        }else {
+
+                            PassAttempt passAttempt = PassAttempt.fromJSON(jsonObject);
+                            resultAdapter.addPassAttempt(passAttempt);
+                            if (passAttempt.bullsCount == GlobalData.getInstance().getCurrentWord().length()) {
+                                Toast.makeText(ChooserScreen.this.getApplicationContext(), "The other person has guessed the word \""
+                                        + GlobalData.getInstance().getCurrentWord() + "\"correctly in " + resultAdapter.getCount() + " attempts.", Toast.LENGTH_LONG).show();
+                                resultAdapter.clearData();
+                                myRef.child("User").setValue("");
+                                myRef.child("ChooserInput").setValue("");
+                                myRef.child("GuesserInput").setValue("");
+                                ChooserScreen.this.finish();
+                            }
                         }
                     }
                 }
