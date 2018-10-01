@@ -60,12 +60,18 @@ public class ChooserScreen extends Activity {
                 String value = dataSnapshot.getValue(String.class);
                 try {
                     if(!value.isEmpty()) {
+                        labelText.setText("Here is the progress of the other player.");
                         JSONObject jsonObject = new JSONObject(value);
-                        if(jsonObject.has("Exit")){
+
+                        PassAttempt passAttempt = PassAttempt.fromJSON(jsonObject);
+                        resultAdapter.addPassAttempt(passAttempt);
+                        if(passAttempt.bullsCount == GlobalData.getInstance().getCurrentWord().length()){
+                            Toast.makeText(ChooserScreen.this.getApplicationContext(), "The other person has guessed the word \""
+                                    +GlobalData.getInstance().getCurrentWord()+"\"correctly in "+resultAdapter.getCount()+" attempts.",Toast.LENGTH_LONG).show();
+                            myRef.child("User").setValue("");
+                            myRef.child("ChooserInput").setValue("");
+                            myRef.child("GuesserInput").setValue("");
                             ChooserScreen.this.finish();
-                        }else {
-                            PassAttempt passAttempt = PassAttempt.fromJSON(jsonObject);
-                            resultAdapter.addPassAttempt(passAttempt);
                         }
                     }
                 }
@@ -98,7 +104,7 @@ public class ChooserScreen extends Activity {
 
                         GlobalData.getInstance().setCurrentWord(enteredText.getText().toString());
                         enteredText.setEnabled(false);
-                        labelText.setText("Your word is set. Waiting for the other player to guess. Sit back and relax.");
+                        labelText.setText("Your word is set. Waiting for the other player to guess.");
                         submitButton.setVisibility(View.GONE);
                         enteredText.setVisibility(View.GONE);
                     }

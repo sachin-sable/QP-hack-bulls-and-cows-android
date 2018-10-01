@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -39,6 +40,7 @@ public class GuesserScreen extends Activity{
     private ListView attemptsListView;
     private Map<Integer,String> passes = new LinkedHashMap<>();
     private ResultAdapter resultAdapter;
+    private TextView textView;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
     final DatabaseReference guesserInput = myRef.child("GuesserInput");
@@ -53,6 +55,7 @@ public class GuesserScreen extends Activity{
         attemptsListView = findViewById(R.id.attemptListView);
         selectedWord = globalData.getCurrentWord();
         resultAdapter = new ResultAdapter(this);
+        textView = findViewById(R.id.textView);
         attemptsListView.setAdapter(resultAdapter);
         submitButton.setVisibility(View.GONE);
         submitButton.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +76,7 @@ public class GuesserScreen extends Activity{
             public void onDataChange(DataSnapshot dataSnapshot) {
                 selectedWord = dataSnapshot.getValue(String.class);
                 if(!selectedWord.isEmpty()) {
+                    textView.setVisibility(View.GONE);
                     addInputBoxes(selectedWord);
                 }
             }
@@ -146,6 +150,10 @@ public class GuesserScreen extends Activity{
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface arg0, int arg1) {
+
+                                myRef.child("User").setValue("");
+                                myRef.child("ChooserInput").setValue("");
+                                myRef.child("GuesserInput").setValue("");
                                 GuesserScreen.this.finish();
                             }
                         });

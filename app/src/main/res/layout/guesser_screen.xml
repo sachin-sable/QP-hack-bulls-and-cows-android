@@ -20,7 +20,14 @@
             android:textColor="@android:color/white"
             android:textSize="20sp"/>
     </LinearLayout>
-
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/holo_red_light"
+        android:layout_marginTop="5dp"
+        android:padding="10dp"
+        android:text="Waiting for a word from the other player. Hang tight!" />
     <LinearLayout
         android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
