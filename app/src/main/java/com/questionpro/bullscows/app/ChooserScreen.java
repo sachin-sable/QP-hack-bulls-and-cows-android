@@ -62,7 +62,7 @@ public class ChooserScreen extends Activity {
                     if(!value.isEmpty()) {
                         JSONObject jsonObject = new JSONObject(value);
                         if(jsonObject.has("Exit")){
-                            ChooserScreen.this.finish();    
+                            ChooserScreen.this.finish();
                         }else {
                             PassAttempt passAttempt = PassAttempt.fromJSON(jsonObject);
                             resultAdapter.addPassAttempt(passAttempt);

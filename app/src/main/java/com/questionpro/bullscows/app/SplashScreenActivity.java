@@ -41,6 +41,7 @@ public class SplashScreenActivity extends Activity{
         setContentView(R.layout.activity_splash_screen);
         RadioButton chooser=findViewById(R.id.chooser_radio_button);
         RadioButton guesser=findViewById(R.id.guesser_radio_button);
+        guesser.setEnabled(false);
         chooser.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

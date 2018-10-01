@@ -45,7 +45,7 @@
             android:layout_margin="20dp"
             android:textColor="@android:color/black"
             android:background="@drawable/login_button_selectore"
-            android:text="Submit" />
+            android:text="Start" />
 
     </LinearLayout>
 
